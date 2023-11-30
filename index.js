@@ -32,12 +32,10 @@ const tweets = [
     },
 ]
 
-//objectif n°2 : afficher tous les tweets
+//objectif n°2 : ajouter la classe favorite aux tweets avec + de 10 likes
 
-//récupération du UL présent dans le DOM de la page grâce à son ID "tweets-list"
 const tweetsContainer = document.getElementById("tweets-list")
 
-//même processus que précédemment sauf que cette fois ci ce n'est plus l'index 0 du tableau tweets que l'on vient récupérer pour assigner le contenu des éléments P mais dynamique l'élément de l'itération de la boucle forEach qui représente un objet
 tweets.forEach((element) => {
     let tweetLi = document.createElement("li")
     tweetLi.classList.add("tweet")
@@ -48,6 +46,10 @@ tweets.forEach((element) => {
 
     let likes = document.createElement("p")
     likes.classList.add("likes")
+    //si les likes de l'élément courant de l'itération sur la boucle du tableau sont supérieurs à 10 alors ajouter la classe favorite à l'élément likes
+    if (element.likes > 10) {
+        likes.classList.add("favorite")
+    }
     likes.innerText = element.likes
 
     let author = document.createElement("p")
