@@ -32,33 +32,45 @@ const tweets = [
     },
 ]
 
-//objectif n°2 : ajouter la classe favorite aux tweets avec + de 10 likes
+//objectif n°4 : refacto
+
+class Tweet {
+    constructor(content = "", likes = 0, author = "") {
+        this.content = content
+        this.likes = likes
+        this.author = author
+    }
+
+    createTweet(parent) {
+        let tweetLi = document.createElement("li")
+        tweetLi.classList.add("tweet")
+
+        let content = document.createElement("p")
+        content.classList.add("content")
+        content.innerText = this.content
+
+        let likes = document.createElement("p")
+        likes.classList.add("likes")
+        if (this.likes > 10) {
+            likes.classList.add("favorite")
+        }
+        likes.innerText = this.likes
+
+        let author = document.createElement("p")
+        author.classList.add("author")
+        author.innerText = this.author
+
+        tweetLi.appendChild(content)
+        tweetLi.appendChild(likes)
+        tweetLi.appendChild(author)
+
+        parent.appendChild(tweetLi)
+    }
+}
 
 const tweetsContainer = document.getElementById("tweets-list")
 
 tweets.forEach((element) => {
-    let tweetLi = document.createElement("li")
-    tweetLi.classList.add("tweet")
-
-    let content = document.createElement("p")
-    content.classList.add("content")
-    content.innerText = element.content
-
-    let likes = document.createElement("p")
-    likes.classList.add("likes")
-    //si les likes de l'élément courant de l'itération sur la boucle du tableau sont supérieurs à 10 alors ajouter la classe favorite à l'élément likes
-    if (element.likes > 10) {
-        likes.classList.add("favorite")
-    }
-    likes.innerText = element.likes
-
-    let author = document.createElement("p")
-    author.classList.add("author")
-    author.innerText = element.author
-
-    tweetLi.appendChild(content)
-    tweetLi.appendChild(likes)
-    tweetLi.appendChild(author)
-
-    tweetsContainer.appendChild(tweetLi)
+    let tweet = new Tweet(element.content, element.likes, element.author)
+    tweet.createTweet(tweetsContainer)
 })
